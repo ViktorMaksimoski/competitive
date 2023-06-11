@@ -11,77 +11,84 @@ using Tree =
 tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void setUSA(string name) {
-       freopen( (name + ".in").c_str(), "r", stdin);
-       freopen( (name + ".out").c_str(), "w", stdout);
+        freopen( (name + ".in").c_str(), "r", stdin);
+        freopen( (name + ".out").c_str(), "w", stdout);
 }
 
 void setIO(string name = "") {
-       ios_base::sync_with_stdio(false);
-       cout.tie(nullptr);
-       cin.tie(nullptr);
-       if(name != "") setUSA(name);
+        ios_base::sync_with_stdio(false);
+        cout.tie(nullptr);
+        cin.tie(nullptr);
+        if(name != "") setUSA(name);
 }
 
-template <class T>
-struct DSU {
-       vector<T> parent;
-       vector<T> size;
-       int components;
-       int maxSize = 1;
+//tree type, vector type
+template <class T, class U>
+struct SegTree {
+        int n;
+        vector<T> tree, lazy;
+        vector<U> v;
 
-       DSU(T n) {
-              parent.resize(n);
-              for(int i=0; i<n; i++) parent[i] = i;
-              size.resize(n, 1);
-              components = n;
-       }
+        SegTree(vector<U> const &v) {
+                n = v.size();
+                tree.resize(4*n+5);
+                lazy.resize(4*n+5, -1);
+                this->v = v;
+                build(1, 0, n-1);
+        }
 
-       T find(T x) {
-              if(parent[x] == x) return x;
-              return parent[x] = find(parent[x]);
-       }
+        T combine(T node) {
+                return tree[node] = tree[2*node] + tree[2*node+1];
+        }
 
-       bool uni(T a, T b) {
-              T leaderA = find(a), leaderB = find(b);
+        T combine(T a, T b) {
+                return a + b;
+        }
 
-              if(leaderA == leaderB) {
-                     return false;
-              }
+        void getLazy(int node) {
+                lazy[2*node] += lazy[node];
+                lazy[2*node+1] += lazy[node];
+                lazy[node] = 0;
+        }
 
-              components--;
+        void build(int node, int l, int r) {
+                if(l == r) {
+                        tree[node] = v[l];
+                } else {
+                        int mid = (l + r) / 2;
+                        build(2*node, l, mid);
+                        build(2*node+1, mid+1, r);
+                        combine(node);
+                }
+        }
 
-              if(size[leaderA] > size[leaderB]) swap(leaderA, leaderB);
+        T query(int node, int tl, int tr, int l, int r) {
+                if(l > r) return 0;
+                if(l == tl && tr == r) return tree[node];
 
-              parent[leaderA] = leaderB;
-              size[leaderB] += size[leaderA];
-              maxSize = max(maxSize, size[leaderB]);
-              return true;
-       }
+                int mid = (tl + tr) / 2;
 
-       int getComponents() {
-              return components;
-       }
+                return combine(query(2*node, tl, mid, l, min(mid, r)), query(2*node+1, mid+1, tr, max(mid+1, l), r));
+        }
 
-       int getMaxSize() {
-              return maxSize;
-       }
+        void update(int node, int tl, int tr, int pos, T val) {
+                if(tl == tr) {
+                        tree[node] = val;
+                } else {
+                        int mid = (tl + tr) / 2;
+                        if(tl <= pos && pos <= mid)
+                                update(2*node, tl, mid, pos, val);
+                        else
+                                update(2*node+1, mid+1, tr, pos, val);
+                        combine(node);
+                }
+        }
 };
 
 int main() {
-      setIO();
+       setIO();
 
-      int n, q;
-      cin >> n >> q;
+        //code starts here 
 
-      DSU<int> dsu(n+1);
-
-      while(q--) {
-       int a, b;
-       cin >> a >> b;
-       dsu.uni(a, b);
-
-       cout << dsu.getComponents() << " " << dsu.getMaxSize() << '\n';
-      }
-
-      return 0;
+       return 0;
 }
