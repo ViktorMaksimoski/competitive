@@ -22,73 +22,11 @@ void setIO(string name = "") {
         if(name != "") setUSA(name);
 }
 
-//tree type, vector type
-template <class T, class U>
-struct SegTree {
-        int n;
-        vector<T> tree, lazy;
-        vector<U> v;
-
-        SegTree(vector<U> const &v) {
-                n = v.size();
-                tree.resize(4*n+5);
-                lazy.resize(4*n+5, -1);
-                this->v = v;
-                build(1, 0, n-1);
-        }
-
-        T combine(T node) {
-                return tree[node] = tree[2*node] + tree[2*node+1];
-        }
-
-        T combine(T a, T b) {
-                return a + b;
-        }
-
-        void getLazy(int node) {
-                lazy[2*node] += lazy[node];
-                lazy[2*node+1] += lazy[node];
-                lazy[node] = 0;
-        }
-
-        void build(int node, int l, int r) {
-                if(l == r) {
-                        tree[node] = v[l];
-                } else {
-                        int mid = (l + r) / 2;
-                        build(2*node, l, mid);
-                        build(2*node+1, mid+1, r);
-                        combine(node);
-                }
-        }
-
-        T query(int node, int tl, int tr, int l, int r) {
-                if(l > r) return 0;
-                if(l == tl && tr == r) return tree[node];
-
-                int mid = (tl + tr) / 2;
-
-                return combine(query(2*node, tl, mid, l, min(mid, r)), query(2*node+1, mid+1, tr, max(mid+1, l), r));
-        }
-
-        void update(int node, int tl, int tr, int pos, T val) {
-                if(tl == tr) {
-                        tree[node] = val;
-                } else {
-                        int mid = (tl + tr) / 2;
-                        if(tl <= pos && pos <= mid)
-                                update(2*node, tl, mid, pos, val);
-                        else
-                                update(2*node+1, mid+1, tr, pos, val);
-                        combine(node);
-                }
-        }
-};
 
 int main() {
        setIO();
 
-        //code starts here 
+       
 
        return 0;
 }
