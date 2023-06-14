@@ -11,23 +11,21 @@ using Tree =
 tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void setUSA(string name) {
-        freopen( (name + ".in").c_str(), "r", stdin);
-        freopen( (name + ".out").c_str(), "w", stdout);
+    freopen( (name + ".in").c_str(), "r", stdin);
+    freopen( (name + ".out").c_str(), "w", stdout);
 }
 
 void setIO(string name = "") {
-        ios_base::sync_with_stdio(false);
-        cout.tie(nullptr);
-        cin.tie(nullptr);
-        if(name != "") setUSA(name);
+    ios_base::sync_with_stdio(false);
+    cout.tie(nullptr);
+    cin.tie(nullptr);
+    if(name != "") setUSA(name);
 }
 
-int x=2001;
 int main() {
-       setIO();
+    setIO();
 
-       x++;
-       cout << x;
+    int a, b, c;
 
-       return 0;
+    return 0;
 }
