@@ -93,7 +93,7 @@ int main() {
     }
 
     sort(queries.begin(), queries.end(), cmp);
-    sort(edges.begin(), edges.end(), greater<pair<int, pair<int, int>> > ());
+    sort(edges.begin(), edges.end(), greater<pair<int, pair<int, int>> >());
 
     int id = 0;
     for(int query=0; query<q; query++) {

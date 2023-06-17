@@ -22,10 +22,45 @@ void setIO(string name = "") {
     if(name != "") setUSA(name);
 }
 
+int n;
+vector<vector<int> > graph;
+vector<bool> vis;
+
+void dfs(int node) {
+    vis[node] = true;
+
+    for(int &next : graph[node]) {
+        if(vis[next]) continue;
+        dfs(next);
+    }
+}
+
 int main() {
     setIO();
 
-    int a, b, c;
+    cin >> n;
+    int ans = 0;
+    graph.resize(n+1);
+    vis.resize(n+1, false);
 
+    if(n == 1) {
+        cout << 1 << '\n';
+        return 0;
+    }
+
+    for(int i=1; i<=n; i++) {
+        int a;
+        cin >> a;
+        graph[a].push_back(i);
+        graph[i].push_back(a);
+    }
+
+    for(int i=1; i<=n; i++) {
+        if(vis[i]) continue;
+        ans++;
+        dfs(i);
+    }
+
+    cout << ans << '\n';
     return 0;
 }

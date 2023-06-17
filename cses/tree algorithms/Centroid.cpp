@@ -62,7 +62,6 @@ int main() {
 
     get_sub(1);
     
-    
     cout << get_centroid(1) << '\n';
     return 0;
 }
