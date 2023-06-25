@@ -1,363 +1,416 @@
 {
-	 "C++ Fast IO ans Bits": {
-	 	"prefix": "cppfib",
-	 	"body": [
-	 		"#include <bits/stdc++.h>",
-			"#include <ext/pb_ds/assoc_container.hpp>",
-			"using ll = long long;",
-			"using ull = unsigned long long;",
-			"const int mod = 1e9 + 7;",
-			"const int LOG = 20;",
-	 		"using namespace std;",
-			"using namespace __gnu_pbds;",
-			"template <class T>\nusing Tree = \ntree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;",
-			"",
-			"void setUSA(string name) {",
-			"\t freopen( (name + \".in\").c_str(), \"r\", stdin);",
-			"\t freopen( (name + \".out\").c_str(), \"w\", stdout);",
-			"}",
-			"",
-			"void setIO(string name = \"\") {",
-			"\t ios_base::sync_with_stdio(false);",
-			"\t cout.tie(nullptr);",
-			"\t cin.tie(nullptr);",
-			"\t if(name != \"\") setUSA(name);",
-			"}\n",
-			"int main() {",
-			"\tsetIO();",
-			"\n\t //code starts here \n",
-			"\treturn 0;",
-			"}"
+	"C++ Fast IO ans Bits": {
+		"prefix": "cppfib",
+		"body": [
+			"#include <bits/stdc++.h>",
+		   "#include <ext/pb_ds/assoc_container.hpp>",
+		   "using ll = long long;",
+		   "using ull = unsigned long long;",
+		   "using ld = long double;",
+		   "const int mod = 1e9 + 7;",
+			"using namespace std;",
+		   "using namespace __gnu_pbds;",
+		   "template <class T>\nusing Tree = \ntree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;",
+		   "",
+		   "void setUSA(string name) {",
+		   "\tfreopen( (name + \".in\").c_str(), \"r\", stdin);",
+		   "\tfreopen( (name + \".out\").c_str(), \"w\", stdout);",
+		   "}",
+		   "",
+		   "void setIO(string name = \"\") {",
+		   "\tios_base::sync_with_stdio(false);",
+		   "\tcout.tie(nullptr);",
+		   "\tcin.tie(nullptr);",
+		   "\tif(name != \"\") setUSA(name);",
+		   "}\n",
+		   "int main() {",
+		   "\tsetIO();",
+		   "\n\t//code starts here \n",
+		   "\treturn 0;",
+		   "}",
 
-	 	],
-	 	"description": "Log output to console"
-	},
-	"Fast min": {
-		"prefix": "min",
-		"body": [
-			"min()"
-		]
-	},
-	"Fast max": {
-		"prefix": "max",
-		"body": [
-			"max()"
-		]
-	},
-	"Fast vector": {
-		"prefix": "vec",
-		"body": [
-			"vector<int> v;"
-		]
-	},
-	"Fast set": {
-		"prefix": "set",
-		"body": [
-			"set<int> s;"
-		]
-	},
-	"Fast map": {
-		"prefix": "occ",
-		"body": [
-			"map<int, int> occ;"
 		],
-		"description": "add map for storing occurances"
-	},
-	"Fast graph": {
-		"prefix": ["ginput", "graph-input"],
-		"body": [
-			"for(int i=0; i<m; i++) {",
-			"\t int a, b;",
-			"\t cin >> a >> b;",
-			"\t graph[a].push_back(b);",
-			"\t graph[b].push_back(a);",
-			"}"
-		],
-		"description": "input for unweighted bidirectional graph"
-	},
-	"Fast weighted graph": {
-		"prefix": ["gwinput", "path-input"],
-		"body": [
-			"for(int i=0; i<m; i++) {",
-			"\t int a, b, w;",
-			"\t cin >> a >> b >> w;",
-			"\t graph[a].push_back({ b, w });",
-			"\t graph[b].push_back({ a, w });",
-			"}"
-		],
-		"description": "input for weighted bidirectional graph"
-	},
-	"Fast sort": {
-		"prefix": "vsort",
-		"body": [
-			"sort(v.begin(), v.end());"
-		]
-	},
-	"Fast BIT": {
-		"prefix": ["getFenwick", "getBIT"],
-		"body": [
-			"// tree type, constructor vector type",
-			"template <class T, class U>",
-			"struct BIT {",
-			"\tvector<T> tree;",
-			"\tint n;",
-			"\n\tBIT(int x) {",
-			"\t\ttree.resize(x);",
-			"\t\tn = x;",
-			"\t}",
-			"\n\tBIT(vector<U> const &v) : BIT(v.size()) {",
-			"\t\tfor(int i=0; i<v.size(); i++)",
-			"\t\t\tupdate(i, v[i]);",
-			"\t}",
-			"\n\tvoid update(int x, int d) {",
-			"\t\tfor(; x < n; x = x | (x + 1))",
-			"\t\t\ttree[x] += d;",
-			"\t}",
-			"\n\tT sum(int id) {",
-			"\t\tT s = 0;",
-			"\n\t\tfor(; id >= 0; id = (id & (id + 1)) - 1)",
-			"\t\t\ts += tree[id];",
-			"\t\treturn s;",
-			"\t}",
-			"\n\tT sum(int l, int r) {",
-			"\t\treturn sum(r) - sum(l-1);",
-			"\t}",
-			"};"
-		],
-		"description": "Fenwick Tree for sum queries and updates template"
-	},
-	"Fast DSU": {
-		"prefix": ["getDSU", "struct-dsu", "doDSU"],
-		"body": [
-			"template <class T>",
-			"struct DSU {",
-			"\tvector<T> parent;",
-			"\tvector<int> size;",
-			"\tint components;",
-			"\n\tDSU(int n) {",
-			"\t\tparent.resize(n+1);",
-			"\t\tfor(int i=0; i<n+1; i++) parent[i] = i;",
-			"\t\tsize.resize(n+1, 1);",
-			"\t\tcomponents = n;",
-			"\t}",
-			"\n\tT find(T x) {",
-			"\t\tif(parent[x] == x) return x;",
-			"\t\treturn parent[x] = find(parent[x]);",
-			"\t}",
-			"\n\tT getSize(T x) {",
-			"\t\treturn size[find(x)];",
-			"\t}",
-			"\n\tbool uni(T a, T b) {",
-			"\t\tT leaderA = find(a), leaderB = find(b);",
-			"\n\t\tif(leaderA == leaderB) {",
-			"\t\t\treturn false;",
-			"\t\t}",
-			"\n\t\tcomponents--;",
-			"\n\t\tif(size[leaderA] > size[leaderB]) swap(leaderA, leaderB);",
-			"\n\t\tparent[leaderA] = leaderB;",
-			"\t\tsize[leaderB] += size[leaderA];",
-			"\t\treturn true;",
-			"\t}",
-			"\n\tint getComponents() {",
-			"\t\treturn components;",
-			"\t}",
-			"};"
-		],
-		"description": "Dijoint Set Union with components count template"
-	},
-	"Fast Segment Tree": {
-		"prefix": ["getSegTree", "segment-tree"],
-		"body": [
-			"//tree type, vector type",
-			"template <class T, class U>",
-			"struct SegTree {",
-			"\tint n;",
-			"\tvector<T> tree, lazy;",
-			"\tvector<U> v;",
-			"\n\tSegTree(vector<U> const &v) {",
-			"\t\tn = v.size();",
-			"\t\ttree.resize(4*n+5);",
-			"\t\tlazy.resize(4*n+5, -1);",
-			"\t\tthis->v = v;",
-			"\t\tbuild(1, 0, n-1);",
-			"\t}",
-			"\n\tT combine(T node) {",
-			"\t\treturn tree[node] = tree[2*node] + tree[2*node+1];",
-			"\t}",
-			"\n\tT combine(T a, T b) {",
-			"\t\treturn a + b;",
-			"\t}",
-			"\n\tvoid getLazy(int node) {",
-			"\t\tlazy[2*node] += lazy[node];",
-			"\t\tlazy[2*node+1] += lazy[node];",
-			"\t\tlazy[node] = 0;",
-			"\t}",
-			"\n\tvoid build(int node, int l, int r) {",
-			"\t\tif(l == r) {",
-			"\t\t\ttree[node] = v[l];",
-			"\t\t} else {",
-			"\t\t\tint mid = (l + r) / 2;",
-			"\t\t\tbuild(2*node, l, mid);\n\t\t\tbuild(2*node+1, mid+1, r);",
-			"\t\t\tcombine(node);",
-			"\t\t}",
-			"\t}",
-			"\n\tT query(int node, int tl, int tr, int l, int r) {",
-			"\t\tif(l > r) return 0;",
-			"\t\tif(l == tl && tr == r) return tree[node];",
-			"\n\t\tint mid = (tl + tr) / 2;",
-			"\n\t\treturn combine(query(2*node, tl, mid, l, min(mid, r)), query(2*node+1, mid+1, tr, max(mid+1, l), r));",
-			"\t}",
-			"\n\tvoid update(int node, int tl, int tr, int pos, T val) {",
-			"\t\tif(tl == tr) {",
-			"\t\t\ttree[node] = val;",
-			"\t\t} else {",
-			"\t\t\tint mid = (tl + tr) / 2;",
-			"\t\t\tif(tl <= pos && pos <= mid)\n\t\t\t\tupdate(2*node, tl, mid, pos, val);",
-			"\t\t\telse\n\t\t\t\tupdate(2*node+1, mid+1, tr, pos, val);",
-			"\t\t\tcombine(node);",
-			"\t\t}",
-			"\t}",
-			"};"
-		],
-		"description": "Segment Tree template"
-	},
-	"Fast SQRT decomposition": {
-		"prefix" : ["getSQRT", "sqrt-decomposition", "doSQRT"],
-		"body": [
-			"template<class T, class U>",
-			"struct SQRT {",
-			"\tint block_size;",
-			"\tvector<U> v;",
-			"\tvector<T> blocks;",
-			"\n\tSQRT(int sz, vector<U> const &v) {",
-			"\t\tthis->block_size = sz;",
-			"\t\tthis->v = v;",
-			"\t\tblocks.resize(sz, 0);",
-			"\t\tfor(int i=0; i<v.size(); i++)",
-			"\t\t\tblocks[i / block_size] += v[i];",
-			"\t}",
-			"\n\tvoid update(int id, T val) {",
-			"\t\tblocks[id / block_size] -= v[id];",
-			"\t\tv[id] = val;",
-			"\t\tblocks[id / block_size] += v[id];",
-			"\t}",
-			"\n\tT query(int r) {",
-			"\t\tT sum = 0;",
-			"\t\tfor(int i=0; i<r/block_size; i++)\n\t\t\tsum += blocks[i];",
-			"\t\tfor(int i=(r / block_size) * block_size; i<r; i++)",
-			"\t\t\tsum += v[i];",
-			"\t\t return sum;",
-			"\t}",
-			"\n\tT query(int l, int r) {",
-			"\t\treturn query(r) - query(l-1);",
-			"\t}",
-			"};"
-		],
-		"description": "SQRT Decomposition template"
-	},
-	"Fast Binary Jump": {
-		"prefix": ["b-jump", "binary-lifting", "getJump"],
-		"body": [
-			"int jmp(int x, int d) {",
-			"\tfor(int j=LOG-1; j>=0; j--)",
-			"\t\tif(d & (1 << j)) x = up[x][j];",
-			"\treturn x;",
-			"}"
-		],
-		"description": "implements binary jump function"
-	},
-	"Fast LCA": {
-		"prefix": "getLCA",
-		"body": [
-			"int get_lca(int a, int b) {",
-			"\tif(depth[a] < depth[b]) swap(a, b);",
-			"\n\ta = jmp(a, depth[a] - depth[b]);",
-			"\tif(a == b) return a;",
-			"\tfor(int j=LOG-1; j>=0; j--)",
-			"\t\tif(up[a][j] != up[b][j])",
-			"\t\t\ta = up[a][j], b = up[b][j];",
-			"\n\treturn up[a][0];",
-			"}"
-		], 
-		"description": "implements lowest common ancestor"
-	},
-	"Fast DFS": {
-		"prefix": ["getGraphDFS", "doGraphDFS"],
-		"body": [
-			"void dfs(int node) {",
-			"\tvis[node] = true;",
-			"\n\tfor(int &next : graph[node])\n\t\tif(!vis[next]) dfs(next);",
-			"}"
-		],
-		"description": "implements a dfs on a graph"
-	},
-	"Fast Matrix Walking": {
-		"prefix": "getDirections",
-		"body": [
-			"int dr[4] = {0, -1, 0, 1};\nint dc[4] = {-1, 0, 1, 0};\nint n, m;"
-		],
-		"description": "get dr and dc arrays"
-	},
-	"Fast Check": {
-		"prefix": "getCheck",
-		"body": [
-			"bool ok(int r, int c) {",
-			"\treturn (r >= 0 && r < n && c >= 0 && c < m && !vis[r][c] && mat[r][c] != \"#\");",
-			"}"
-		],
-		"description": "implements OK function for matrix"
-	},
-	"Fast Flood Fill": {
-		"prefix": "getFlood",
-		"body": [
-			"void dfs(int r, int c) {",
-			"\tvis[r][c] = true;",
-			"\n\tfor(int i=0; i<4; i++) {",
-			"\t\tint newR = r + dr[i];\n\t\tint newC = c + dc[i];",
-			"\t\tif(!ok(newR, newC)) continue;",
-			"\t\tdfs(newR, newC);",
-			"\t}",
-			"}"
-		],
-		"description": "Implements flood fill"
-	},
-	"Fast BFS": {
-		"prefix" : ["getBFS", "doBFS"],
-		"body": [
-			"void bfs(int start) {",
-			"\tqueue<int> q;",
-			"\tq.push(start);\n\tvis[start] = true;\n\tdist[start] = 0;",
-			"\n\twhile(!q.empty()) {",
-			"\t\tint node = q.front();",
-			"\t\tq.pop();",
-			"\n\t\tfor(int &next : graph[node]) {",
-			"\t\t\tif(vis[next]) continue;",
-			"\t\t\tvis[next] = true;",
-			"\t\t\tdist[next] = dist[node] + 1;",
-			"\t\t\tq.push(next);",
-			"\t\t}",
-			"\t}",
-			"}"
-		],
-		"description": "implements BFS on graph"
-	},
-	"Fast Binary Search": {
-		"prefix": "getBS",
-		"body": [
-			"while(l <= r) {",
-			"\tauto mid = l + (r - l) / 2;",
-			"\n\tif(check(mid)) {",
-			"",
-			"\t} else {",
-			"",
-			"\t}",
-			"}"
-		],
-		"description": "implements binary search template"
-	},
-	"Fast Reverse": {
-		"prefix": "vrev",
-		"body": "reverse(v.begin(), v.end());",
-		"description": "Reverse vector"
-	}
+		"description": "Log output to console"
+   },
+   "Fast min": {
+	   "prefix": "min",
+	   "body": [
+		   "min(${0})",
+	   ]
+   },
+   "Fast max": {
+	   "prefix": "max",
+	   "body": [
+		   "max(${0})",
+	   ]
+   },
+   "Fast vector": {
+	   "prefix": "vec",
+	   "body": [
+		   "vector<${0}> v;",
+	   ]
+   },
+   "Fast set": {
+	   "prefix": "set",
+	   "body": [
+		   "set<${0}> s;",
+	   ]
+   },
+   "Fast map": {
+	   "prefix": "occ",
+	   "body": [
+		   "map<int, int> occ;",
+	   ],
+	   "description": "add map for storing occurances",
+   },
+   "Fast graph": {
+	   "prefix": ["ginput", "graph-input"],
+	   "body": [
+		   "for(int i=0; i<m; i++) {",
+		   "\tint a, b;",
+		   "\tcin >> a >> b;",
+		   "\tgraph[a].push_back(b);",
+		   "\tgraph[b].push_back(a);",
+		   "}",
+	   ],
+	   "description": "input for unweighted bidirectional graph"
+   },
+   "Fast weighted graph": {
+	   "prefix": ["gwinput", "path-input"],
+	   "body": [
+		   "for(int i=0; i<m; i++) {",
+		   "\tint a, b, w;",
+		   "\tcin >> a >> b >> w;",
+		   "\tgraph[a].push_back({ b, w });",
+		   "\tgraph[b].push_back({ a, w });",
+		   "}",
+	   ],
+	   "description": "input for weighted bidirectional graph"
+   },
+   "Fast sort": {
+	   "prefix": "sort",
+	   "body": [
+		   "sort(${0}.begin(), ${0}.end());"
+	   ]
+   },
+   "Fast BIT": {
+	   "prefix": ["getFenwick", "getBIT"],
+	   "body": [
+		   "// tree type, constructor vector type",
+		   "template <class T, class U>",
+		   "struct BIT {",
+		   "\tvector<T> tree;",
+		   "\tint n;",
+		   "\n\tBIT(int x) {",
+		   "\t\ttree.resize(x);",
+		   "\t\tn = x;",
+		   "\t}",
+		   "\n\tBIT(vector<U> const &v) : BIT(v.size()) {",
+		   "\t\tfor(int i=0; i<v.size(); i++)",
+		   "\t\t\tupdate(i, v[i]);",
+		   "\t}",
+		   "\n\tvoid update(int x, int d) {",
+		   "\t\tfor(; x < n; x = x | (x + 1))",
+		   "\t\t\ttree[x] += d;",
+		   "\t}",
+		   "\n\tT sum(int id) {",
+		   "\t\tT s = 0;",
+		   "\n\t\tfor(; id >= 0; id = (id & (id + 1)) - 1)",
+		   "\t\t\ts += tree[id];",
+		   "\t\treturn s;",
+		   "\t}",
+		   "\n\tT sum(int l, int r) {",
+		   "\t\treturn sum(r) - sum(l-1);",
+		   "\t}",
+		   "};"
+	   ],
+	   "description": "Fenwick Tree for sum queries and updates template"
+   },
+   "Fast DSU": {
+	   "prefix": ["getDSU", "struct-dsu", "doDSU"],
+	   "body": [
+		   "template <class T>",
+		   "struct DSU {",
+		   "\tvector<T> parent;",
+		   "\tvector<int> size;",
+		   "\tint components;",
+		   "\n\tDSU(int n) {",
+		   "\t\tparent.resize(n+1);",
+		   "\t\tfor(int i=0; i<n+1; i++) parent[i] = i;",
+		   "\t\tsize.resize(n+1, 1);",
+		   "\t\tcomponents = n;",
+		   "\t}",
+		   "\n\tT find(T x) {",
+		   "\t\tif(parent[x] == x) return x;",
+		   "\t\treturn parent[x] = find(parent[x]);",
+		   "\t}",
+		   "\n\tT getSize(T x) {",
+		   "\t\treturn size[find(x)];",
+		   "\t}",
+		   "\n\tbool uni(T a, T b) {",
+		   "\t\tT leaderA = find(a), leaderB = find(b);",
+		   "\n\t\tif(leaderA == leaderB) {",
+		   "\t\t\treturn false;",
+		   "\t\t}",
+		   "\n\t\tcomponents--;",
+		   "\n\t\tif(size[leaderA] > size[leaderB]) swap(leaderA, leaderB);",
+		   "\n\t\tparent[leaderA] = leaderB;",
+		   "\t\tsize[leaderB] += size[leaderA];",
+		   "\t\treturn true;",
+		   "\t}",
+		   "\n\tint getComponents() {",
+		   "\t\treturn components;",
+		   "\t}",
+		   "\n\tbool same_set(T a, T b) {",
+		   "\t\treturn find(a) == find(b);",
+		   "\t}",
+		   "};"
+	   ],
+	   "description": "Dijoint Set Union with components count template"
+   },
+   "Fast Segment Tree": {
+	   "prefix": ["getSegTree", "segment-tree"],
+	   "body": [
+		   "//tree type, vector type",
+		   "template <class T, class U>",
+		   "struct SegTree {",
+		   "\tint n;",
+		   "\tvector<T> tree, lazy;",
+		   "\tvector<U> v;",
+		   "\n\tSegTree(vector<U> const &v) {",
+		   "\t\tn = v.size();",
+		   "\t\ttree.resize(4*n+5);",
+		   "\t\tlazy.resize(4*n+5, -1);",
+		   "\t\tthis->v = v;",
+		   "\t\tbuild(1, 0, n-1);",
+		   "\t}",
+		   "\n\tT combine(T a, T b) {",
+		   "\t\treturn a + b;",
+		   "\t}",
+		   "\n\tvoid getLazy(int node) {",
+		   "\t\tlazy[2*node] += lazy[node];",
+		   "\t\tlazy[2*node+1] += lazy[node];",
+		   "\t\tlazy[node] = 0;",
+		   "\t}",
+		   "\n\tvoid build(int node, int l, int r) {",
+		   "\t\tif(l == r) {",
+		   "\t\t\ttree[node] = v[l];",
+		   "\t\t} else {",
+		   "\t\t\tint mid = (l + r) / 2;",
+		   "\t\t\tbuild(2*node, l, mid);\n\t\t\tbuild(2*node+1, mid+1, r);",
+		   "\t\t\ttree[node] = combine(tree[2*node], tree[2*node+1]);",
+		   "\t\t}",
+		   "\t}",
+		   "\n\tT query(int node, int tl, int tr, int l, int r) {",
+		   "\t\tif(l > r) return 0;",
+		   "\t\tif(l == tl && tr == r) return tree[node];",
+		   "\n\t\tint mid = (tl + tr) / 2;",
+		   "\n\t\treturn combine(query(2*node, tl, mid, l, min(mid, r)), query(2*node+1, mid+1, tr, max(mid+1, l), r));",
+		   "\t}",
+		   "\n\tvoid update(int node, int tl, int tr, int pos, T val) {",
+		   "\t\tif(tl == tr) {",
+		   "\t\t\ttree[node] = val;",
+		   "\t\t} else {",
+		   "\t\t\tint mid = (tl + tr) / 2;",
+		   "\t\t\tif(tl <= pos && pos <= mid)\n\t\t\t\tupdate(2*node, tl, mid, pos, val);",
+		   "\t\t\telse\n\t\t\t\tupdate(2*node+1, mid+1, tr, pos, val);",
+		   "\t\t\ttree[node] = combine(tree[2*node], tree[2*node+1]);",
+		   "\t\t}",
+		   "\t}",
+		   "};",
+	   ],
+	   "description": "Segment Tree template"
+   },
+   "Fast SQRT decomposition": {
+	   "prefix" : ["getSQRT", "sqrt-decomposition", "doSQRT"],
+	   "body": [
+		   "template<class T, class U>",
+		   "struct SQRT {",
+		   "\tint block_size;",
+		   "\tvector<U> v;",
+		   "\tvector<T> blocks;",
+		   "\n\tSQRT(int sz, vector<U> const &v) {",
+		   "\t\tthis->block_size = sz;",
+		   "\t\tthis->v = v;",
+		   "\t\tblocks.resize(sz, 0);",
+		   "\t\tfor(int i=0; i<v.size(); i++)",
+		   "\t\t\tblocks[i / block_size] += v[i];",
+		   "\t}",
+		   "\n\tvoid update(int id, T val) {",
+		   "\t\tblocks[id / block_size] -= v[id];",
+		   "\t\tv[id] = val;",
+		   "\t\tblocks[id / block_size] += v[id];",
+		   "\t}",
+		   "\n\tT query(int r) {",
+		   "\t\tT sum = 0;",
+		   "\t\tfor(int i=0; i<r/block_size; i++)\n\t\t\tsum += blocks[i];",
+		   "\t\tfor(int i=(r / block_size) * block_size; i<r; i++)",
+		   "\t\t\tsum += v[i];",
+		   "\t\t return sum;",
+		   "\t}",
+		   "\n\tT query(int l, int r) {",
+		   "\t\treturn query(r) - query(l-1);",
+		   "\t}",
+		   "};",
+	   ],
+	   "description": "SQRT Decomposition template"
+   },
+   "Fast Binary Jump": {
+	   "prefix": ["b-jump", "binary-lifting", "getJump"],
+	   "body": [
+		   "int jmp(int x, int d) {",
+		   "\tfor(int j=LOG-1; j>=0; j--)",
+		   "\t\tif(d & (1 << j)) x = up[x][j];",
+		   "\treturn x;",
+		   "}"
+	   ],
+	   "description": "implements binary jump function"
+   },
+   "Fast LCA": {
+	   "prefix": "getLCA",
+	   "body": [
+		   "int get_lca(int a, int b) {",
+		   "\tif(depth[a] < depth[b]) swap(a, b);",
+		   "\n\ta = jmp(a, depth[a] - depth[b]);",
+		   "\tif(a == b) return a;",
+		   "\tfor(int j=LOG-1; j>=0; j--)",
+		   "\t\tif(up[a][j] != up[b][j])",
+		   "\t\t\ta = up[a][j], b = up[b][j];",
+		   "\n\treturn up[a][0];",
+		   "}",
+	   ], 
+	   "description": "implements lowest common ancestor"
+   },
+   "Fast DFS": {
+	   "prefix": ["getGraphDFS", "doGraphDFS"],
+	   "body": [
+		   "void dfs(int node) {",
+		   "\tvis[node] = true;",
+		   "\n\tfor(int &next : graph[node])\n\t\tif(!vis[next]) dfs(next);",
+		   "}"
+	   ],
+	   "description": "implements a dfs on a graph"
+   },
+   "Fast Matrix Walking": {
+	   "prefix": "getDirections",
+	   "body": [
+		   "int dr[4] = {0, -1, 0, 1};\nint dc[4] = {-1, 0, 1, 0};\nint n, m;"
+	   ],
+	   "description": "get dr and dc arrays"
+   },
+   "Fast Check": {
+	   "prefix": "getCheck",
+	   "body": [
+		   "bool ok(int r, int c) {",
+		   "\treturn (r >= 0 && r < n && c >= 0 && c < m && !vis[r][c] && mat[r][c] != \"#\");",
+		   "}"
+	   ],
+	   "description": "implements OK function for matrix"
+   },
+   "Fast Flood Fill": {
+	   "prefix": "getFlood",
+	   "body": [
+		   "void dfs(int r, int c) {",
+		   "\tvis[r][c] = true;",
+		   "\n\tfor(int i=0; i<4; i++) {",
+		   "\t\tint newR = r + dr[i];\n\t\tint newC = c + dc[i];",
+		   "\t\tif(!ok(newR, newC)) continue;",
+		   "\t\tdfs(newR, newC);",
+		   "\t}",
+		   "}"
+	   ],
+	   "description": "Implements flood fill"
+   },
+   "Fast BFS": {
+	   "prefix" : ["getBFS", "doBFS"],
+	   "body": [
+		   "void bfs(int start) {",
+		   "\tqueue<int> q;",
+		   "\tq.push(start);\n\tvis[start] = true;\n\tdist[start] = 0;",
+		   "\n\twhile(!q.empty()) {",
+		   "\t\tint node = q.front();",
+		   "\t\tq.pop();",
+		   "\n\t\tfor(int &next : graph[node]) {",
+		   "\t\t\tif(vis[next]) continue;",
+		   "\t\t\tvis[next] = true;",
+		   "\t\t\tdist[next] = dist[node] + 1;",
+		   "\t\t\tq.push(next);",
+		   "\t\t}",
+		   "\t}",
+		   "}"
+	   ],
+	   "description": "implements BFS on graph"
+   },
+   "Fast Binary Search": {
+	   "prefix": "getBS",
+	   "body": [
+		   "while(l <= r) {",
+		   "\tauto mid = l + (r - l) / 2;",
+		   "\n\tif(check(mid)) {",
+		   "",
+		   "\t} else {",
+		   "",
+		   "\t}",
+		   "}"
+	   ],
+	   "description": "implements binary search template"
+   },
+   "Fast Reverse": {
+	   "prefix": "vrev",
+	   "body": "reverse(${0}.begin(), ${0}.end());",
+	   "description": "Reverse vector"
+   },
+   "Fast lower bound" : {
+	   "prefix" : ["lower_bound", "lb"],
+	   "body" : [
+		   "lower_bound(${0}.begin(), ${0}.end(), );"
+	   ],
+	   "description": "Lower bound fast"
+   },
+   "Fast upper bound" : {
+	   "prefix" : ["upper_bound", "ub"],
+	   "body" : [
+		   "upper_bound(${0}.begin(), ${0}.end(), );"
+	   ],
+	   "description": "Upper bound fast"
+   },
+   "Test Case": {
+	   "prefix": ["getTest", "test_case"],
+	   "body": [
+		   "int t;",
+		   "cin >> t;",
+		   "\nwhile(t--)",
+		   "\tsolve();"
+	   ]
+   },
+   "Sparse Table": {
+	   "prefix" : ["getSparse", "sparse-table"],
+	   "body": [
+		   "template<class T, class U>",
+		   "struct SparseTable {",
+		   "\tvector<T> v;",
+		   "\tint LOG = 0;",
+		   "\tvector<vector<U> > table;",
+		   "",
+		   "\tSparseTable(vector<T> const &v) {",
+		   "\t  this->v = v;",
+		   "\t  while((1 << LOG) < this->v.size()) LOG++;",
+		   "\t  LOG += 2;",
+		   "\t  for(int i=0; i<this->v.size(); i++)",
+		   "\t  table.resize(this->v.size(), vector<U>(LOG, 0));",
+		   "\t    table[i][0] = this->v[i];",
+		   "\t  build();",
+		   "\t}",
+		   "\n\tvoid build()",
+		   "\t  for(int k=1; k<LOG; k++)",
+		   "\t    for(int i=0; i+(1 << k)-1<n; i++)",
+		   "\t      table[i][k] = min(table[i][k-1], table[i+(1 << (k-1))][k-1]);",
+		   "\t}",
+		   "\n\tU query(int a, int b) {",
+		   "",
+		   "\t}",
+		   "};"
+	   ],
+	   "description": "Sparse Table struct"
+   }
 }

@@ -1,33 +1,29 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-using ll = long long;
-using ull = unsigned long long;
-const int mod = 1e9 + 7;
-const int LOG = 20;
 using namespace std;
-using namespace __gnu_pbds;
-template <class T>
-using Tree = 
-tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-void setUSA(string name) {
-        freopen( (name + ".in").c_str(), "r", stdin);
-        freopen( (name + ".out").c_str(), "w", stdout);
-}
+struct Point {
+    int x, y;
+};
 
-void setIO(string name = "") {
-        ios_base::sync_with_stdio(false);
-        cout.tie(nullptr);
-        cin.tie(nullptr);
-        if(name != "") setUSA(name);
-}
-
-int x=2001;
 int main() {
-       setIO();
+    int n;
+    long long ans = 0;
+    cin >> n;
 
-       x++;
-       cout << x;
+    vector<Point> v(n);
+    for(int i=0; i<n; i++)
+        cin >> v[i].x;
+    for(int i=0; i<n; i++)
+        cin >> v[i].y;
 
-       return 0;
+    for(int i=0; i<n-1; i++) {
+        for(int j=i+1; j<n; j++) {
+           long long X = (v[i].x - v[j].x) * (v[i].x - v[j].x);
+           long long Y = (v[i].y - v[j].y) * (v[i].y - v[j].y);
+           ans = max(ans, X + Y);
+        }
+    }
+
+    cout << ans << '\n';
+    return 0;
 }
