@@ -41,7 +41,6 @@ int main() {
 
         //dp[i][j] - kolku zarabotil do momentot koga go
         //posetil grad i za vreme na j-to patuvanje
-        
         vector<vector<int> > dp(c+1, vector<int>(t+1, 0-1e9));
         dp[s][0] = 0;
 

@@ -1,14 +1,11 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
+#define sz(x) (int)x.size()
+#define all(x) x.begin(), x.end()
 using ll = long long;
 using ull = unsigned long long;
 using ld = long double;
 const int mod = 1e9 + 7;
 using namespace std;
-using namespace __gnu_pbds;
-template <class T>
-using Tree = 
-tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void setUSA(string name) {
     freopen( (name + ".in").c_str(), "r", stdin);
@@ -25,7 +22,24 @@ void setIO(string name = "") {
 int main() {
     setIO();
 
-    //code starts here 
+    int n, k;
+    cin >> n >> k;
+    int ans = 0;
+    vector<int> v(n);
+    for(int &x : v) cin >> x;
 
+    vector<int> occ(2, 0);
+    int i=0, j=0;
+    while(j < n) {
+        occ[v[j]]++;
+
+        while(occ[0] > k)
+            occ[v[i]]--, i++;
+
+        ans = max(ans, j - i + 1);
+        j++;
+    }
+
+    cout << ans << '\n';
     return 0;
 }
