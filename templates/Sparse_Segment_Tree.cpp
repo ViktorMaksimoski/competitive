@@ -21,104 +21,69 @@ void setIO() {
 
 //for each node we save its sum, lazy, and it's children, if any
 struct Node {
-    int sum, lazy;
-    Node *l, *r;
- 
-    Node() {
-        sum = 0, lazy = 0;
-        l = nullptr, r = nullptr;
-    }
- 
+    ll sum=0, l, r, lazy=0;
+    Node *lc, *rc;
+
+    Node(ll l, ll r) : l(l), r(r), lc(nullptr), rc(nullptr) {}
     ~Node() {
-        delete l;
-        delete r;
+        delete lc;
+        delete rc;
     }
- 
-    void extend(int tl, int tr) {
-        if(tl == tr) return ;
-        if(this->l == nullptr) this->l = new Node();
-        if(this->r == nullptr) this->r = new Node();
-    }
- 
-    void push(int tl, int tr) {
-        if(this->lazy == 0) return ;
-        this->sum = (tr - tl + 1) * this->lazy;
- 
-        if(tl != tr) {
-            extend(tl, tr);
-            this->l->lazy = this->lazy;
-            this->r->lazy = this->lazy;
+
+    void update(ll pos, ll val) {
+        this->sum += val;
+        if(l == r || l > pos || r < pos) return ;
+
+        int tm = (l + r) / 2;
+        if(pos <= tm) {
+            if(!lc) lc = new Node(l, tm);
+            lc->update(pos, val);
+        } else {
+            if(!rc) rc = new Node(tm+1, r);
+            rc->update(pos, val);
         }
- 
-        this->lazy = 0;
+    }
+
+    void push() {
+        if(lazy == 0) return ;
+        sum = (r - l + 1) * lazy;
+
+        if(l != r) {
+            if(lc) lc->lazy = lazy;
+            if(rc) rc->lazy = lazy;
+        }
+
+        lazy = 0;
+    }
+
+    ll query(ll tl, ll tr) {
+        if(l > tr || tl > r) return 0;
+        push();
+        if(tl <= l && r <= tr) return sum;
+        ll res = 0;
+        if(lc) res += lc->query(tl, tr);
+        if(rc) res += rc->query(tl, tr);
+        return res;
     }
 };
-
-void updateLazy(Node *root, int tl, int tr, int l, int r, short val) {
-    root->push(tl, tr);
-    if(tl > r || l > tr || tl > tr) return ;
- 
-    if(l <= tl && tr <= r) {
-        root->lazy = val;
-        root->push(tl, tr);
-        return ;
-    }
- 
-    root->extend(tl, tr);
-    int tm = (tl + tr) / 2;
-    updateLazy(root->l, tl, tm, l, r, val);
-    updateLazy(root->r, tm+1, tr, l, r, val);
-    root->sum = root->l->sum + root->r->sum;
-}
-
-void updateSingle(Node *root, int tl, int tr, int pos, int val) {
-    if(tl > pos || pos > tr) return ;
-
-    if(tl == tr && tl == pos) {
-        root->sum = val;
-        return ;
-    }
-
-    root->extend(tl, tr);
-    int tm = (tl + tr) / 2;
-    if(pos <= tm)
-        updateSingle(root->l, tl, tm, pos, val);
-    else
-        updateSingle(root->r, tm+1, tr, pos, val);
-    root->sum = root->l->sum + root->r->sum;
-}
-
-ll query(Node *root, int tl, int tr, int l, int r) {
-    if(r < tl || tr < l) return 0;
-    root->push(tl, tr);
- 
-    if(l <= tl && tr <= r) return root->sum;
- 
-    root->extend(tl, tr);
-    auto tm = (tl + tr) / 2;
-
-    return query(root->l, tl, tm, l, r) +
-    query(root->r, tm+1, tr, l, r);
-}
 
 int main() {
     setIO();
 
+    Node *root = new Node(1, 1e9);
+
     int q;
     cin >> q;
- 
-    ll c = 0;
-    Node *root = new Node();
     while(q--) {
         int t, a, b;
-        cin >> t >> a >> b;
- 
+        cin >> t;
+
         if(t == 1) {
-            ll res = query(root, 1, 1e9, a+c, b+c);
-            cout << res << '\n';
-            c = res;
+            cin >> a >> b;
+            cout << root->query(a, b) << '\n';
         } else {
-            updateLazy(root, 1, 1e9, a+c, b+c, 1);
+            cin >> a >> b;
+            root->update(a, b);
         }
     }
 

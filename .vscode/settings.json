@@ -1,4 +1,10 @@
 {
     "cph.general.onceMaintainerMessage": false,
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "vector": "cpp",
+        "utility": "cpp",
+        "queue": "cpp",
+        "xstring": "cpp"
+    }
 }

@@ -28,9 +28,14 @@ int main() {
     int n;
     cin >> n;
     bool mat[n][n];
-    for(int i=0; i<n; i++)
-        for(int j=0; j<n; j++)
-            cin >> mat[i][j];
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            char ch;
+            cin >> ch;
+            mat[i][j] = (ch == 'D' ? 1 : 0);
+        }
+    }
+            
 
     ll dp[1 << n];
     memset(dp, 0, sizeof(dp));
