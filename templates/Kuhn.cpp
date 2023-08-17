@@ -31,7 +31,7 @@ bool vis[101];
 //! connected to element j from thi set
 vector<int> left_of, right_of;
 
-bool find_match(int &node) {
+bool find_match(int node) {
     if(vis[node]) return false;
     vis[node] = true;
 
